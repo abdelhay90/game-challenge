@@ -40,7 +40,7 @@ describe('Game Render', function () {
     });
 
     test('Skier right direction', async () => {
-        const game = await testAssets.initGame(true);
+        const game = await testAssets.initGame();
         game.skier.setDirection(Constants.SKIER_DIRECTIONS.DOWN);
 
         testAssets.keyboardKeyDown(Constants.KEYS.RIGHT);
@@ -52,8 +52,8 @@ describe('Game Render', function () {
     });
 
     test('Skier down direction', async () => {
-        const game = await testAssets.initGame(true);
-        game.skier.setDirection(Constants.SKIER_DIRECTIONS.DOWN)
+        const game = await testAssets.initGame();
+        game.skier.setDirection(Constants.SKIER_DIRECTIONS.DOWN);
 
         testAssets.keyboardKeyDown(Constants.KEYS.DOWN);
         expect(game.skier.direction).toEqual(Constants.SKIER_DIRECTIONS.DOWN);
@@ -61,7 +61,7 @@ describe('Game Render', function () {
     });
 
     test('Skier down direction', async () => {
-        const game = await testAssets.initGame(true);
+        const game = await testAssets.initGame();
         let lastY = game.skier.y;
         testAssets.keyboardKeyDown(Constants.KEYS.UP);
         testAssets.keyboardKeyDown(Constants.KEYS.UP);
@@ -80,7 +80,7 @@ describe('Game Render', function () {
     });
 
     test('Skier jumping', async () => {
-        const game = await testAssets.initGame(true);
+        const game = await testAssets.initGame();
         testAssets.keyboardKeyDown(Constants.KEYS.SPACE);
         expect(game.skier.currentState.jumping).toEqual(true);
     });

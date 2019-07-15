@@ -4,7 +4,6 @@ import {intersectTwoRects, Rect} from "../Core/Utils";
 
 export class Skier extends Entity {
     assetName = Constants.SKIER_DOWN;
-
     direction = Constants.SKIER_DIRECTIONS.DOWN;
     speed = Constants.SKIER_STARTING_SPEED;
 
@@ -203,26 +202,30 @@ export class Skier extends Entity {
      * applying jumping rules on the skier
      */
     jump() {
-        if (this.canJump) {
-            this.currentState.jumping = true;
-            this.currentState.frames = 1;
-            this.setDirection(Constants.SKIER_DIRECTIONS.JUMPING_1);
-            this.moveSkierDown();
-            this.jumpingTimer = setInterval(() => {
-                this.currentState.frames++;
-                if (this.currentState.frames > 5) {
-                    this.land();
-                    this.setDirection(Constants.SKIER_DIRECTIONS.DOWN);
-                    this.moveSkierDown();
-                    return;
-                }
-                this.setDirection(
-                    (Constants.SKIER_DIRECTIONS.JUMPING_1 + this.currentState.frames - 1)
-                );
+        return new Promise((resolve) => {
+            if (this.canJump) {
+                this.currentState.jumping = true;
+                this.currentState.frames = 1;
+                this.setDirection(Constants.SKIER_DIRECTIONS.JUMPING_1);
                 this.moveSkierDown();
-            }, Constants.SKIER_TIME_INTERVAL_FOR_JUMPS_ANIMATION);
+                this.jumpingTimer = setInterval(() => {
+                    this.currentState.frames++;
+                    if (this.currentState.frames > 5) {
+                        this.land();
+                        this.setDirection(Constants.SKIER_DIRECTIONS.DOWN);
+                        this.moveSkierDown();
+                        resolve();
+                        return;
+                    }
+                    this.setDirection(
+                        (Constants.SKIER_DIRECTIONS.JUMPING_1 + this.currentState.frames - 1)
+                    );
+                    this.moveSkierDown();
 
-        }
+                }, Constants.SKIER_TIME_INTERVAL_FOR_JUMPS_ANIMATION);
+
+            }
+        });
     }
 
     /**

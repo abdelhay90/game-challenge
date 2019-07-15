@@ -8,15 +8,18 @@ export const map = {};
  * @returns {Promise<Game>}
  */
 export function initGame(newGame = false) {
-    if (game && !newGame)
+    if (game && !newGame) {
+
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve(game)
-            }, 10)
+            }, 1)
         });
+    }
     return new Promise((resolve, reject) => {
         const skiGame = new Game();
         skiGame.load().then(() => {
+            console.log('single');
             skiGame.init();
             skiGame.run();
             game = skiGame;

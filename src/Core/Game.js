@@ -37,12 +37,25 @@ export class Game {
      * run/resume game loop
      */
     run() {
-        this.canvas.clearCanvas();
-
-        this.updateGameWindow();
-        this.drawGameWindow();
+        this.resume();
 
         this.currentAnimationFrame = requestAnimationFrame(this.run.bind(this));
+    }
+
+    /**
+     * set new animation frame request
+     */
+    setAnimationFrameRequest(){
+        this.currentAnimationFrame = requestAnimationFrame(this.run.bind(this));
+    }
+
+    /**
+     * resume game loop
+     */
+    resume() {
+        this.canvas.clearCanvas();
+        this.updateGameWindow();
+        this.drawGameWindow();
     }
 
     /**
@@ -130,7 +143,8 @@ export class Game {
                 // game resume
                 if (!this.currentAnimationFrame) {
                     this.skier.turnDown();
-                    this.run();
+                    this.resume();
+                    this.setAnimationFrameRequest();
                 }
                 event.preventDefault();
                 break;

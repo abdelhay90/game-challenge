@@ -25,7 +25,8 @@
       "!**/vendor/**",
       "!**/coverage/**",
       "!**/tests/**",
-      "!./*.js"
+      "!./*.js",
+      "!./src/index.js"
     ]
   },
   "author": "Dan Wash",
