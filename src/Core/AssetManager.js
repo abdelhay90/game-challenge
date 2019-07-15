@@ -1,9 +1,14 @@
 export class AssetManager {
-    loadedAssets = [];
+    loadedAssets = {};
 
     constructor() {
     }
 
+    /**
+     * load game asset asynchronously
+     * @param assets
+     * @returns {Promise<void>}
+     */
     async loadAssets(assets) {
         const assetPromises = [];
 
@@ -15,6 +20,12 @@ export class AssetManager {
         await Promise.all(assetPromises);
     }
 
+    /**
+     * loads single game asset
+     * @param assetUrl
+     * @param assetName
+     * @returns {Promise<any>}
+     */
     loadSingleAsset(assetUrl, assetName) {
         return new Promise((resolve) => {
             const assetImage = new Image();
@@ -29,6 +40,11 @@ export class AssetManager {
         });
     }
 
+    /**
+     * get asset by name
+     * @param assetName
+     * @returns {*}
+     */
     getAsset(assetName) {
         return this.loadedAssets[assetName];
     }

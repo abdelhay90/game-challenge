@@ -9,10 +9,18 @@ export class Entity {
         this.y = y;
     }
 
+    /**
+     * asset name
+     * @returns {string}
+     */
     getAssetName() {
         return this.assetName;
     }
 
+    /**
+     * get sprite location on screen
+     * @returns {{x: number, y: number}}
+     */
     getPosition() {
         return {
             x: this.x,
@@ -20,6 +28,11 @@ export class Entity {
         };
     }
 
+    /**
+     * draw entity on screen canvas
+     * @param canvas
+     * @param assetManager
+     */
     draw(canvas, assetManager) {
         const asset = assetManager.getAsset(this.assetName);
         const drawX = this.x - asset.width / 2;
