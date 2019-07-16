@@ -1,5 +1,5 @@
-import * as Constants from "../Constants";
-import {Canvas} from "../Core/Canvas";
+import * as Constants from "../../Constants";
+import {Canvas} from "../../Core/Canvas";
 
 /**
  * create canvas object

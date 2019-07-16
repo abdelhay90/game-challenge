@@ -19,7 +19,23 @@ export class Game {
     }
 
     /**
-     * init game
+     * reset game of demand
+     */
+    resetGame() {
+        cancelAnimationFrame(this.currentAnimationFrame);
+        this.currentAnimationFrame = null;
+        this.canvas.clearCanvas();
+        this.skier = new Skier(0, 0);
+        this.obstacleManager.obstacles = [];
+        this.load().then(() => {
+            this.init();
+            this.run();
+        });
+
+    }
+
+    /**
+     * initialize game
      */
     init() {
         this.obstacleManager.placeInitialObstacles();
@@ -45,7 +61,7 @@ export class Game {
     /**
      * set new animation frame request
      */
-    setAnimationFrameRequest(){
+    setAnimationFrameRequest() {
         this.currentAnimationFrame = requestAnimationFrame(this.run.bind(this));
     }
 
@@ -150,6 +166,11 @@ export class Game {
                 break;
             case Constants.KEYS.SPACE:
                 this.skier.jump();
+                event.preventDefault();
+                break;
+
+            case Constants.KEYS.D:
+                this.resetGame();
                 event.preventDefault();
                 break;
         }

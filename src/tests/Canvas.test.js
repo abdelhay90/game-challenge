@@ -1,6 +1,6 @@
 import * as Constants from "../Constants";
 import {Canvas} from '../Core/Canvas';
-import * as testAssets from "./canvas.assets";
+import * as testAssets from "./assets/canvas.assets";
 
 describe('Canvas', function () {
     test('Canvas to be initialized successfully', () => {

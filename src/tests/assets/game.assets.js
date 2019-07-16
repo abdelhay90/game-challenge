@@ -1,4 +1,4 @@
-import {Game} from "../Core/Game";
+import {Game} from "../../Core/Game";
 
 let game = null;
 export const map = {};

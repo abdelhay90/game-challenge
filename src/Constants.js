@@ -83,5 +83,6 @@ export const KEYS = {
     DOWN: 40,
     P: 80,
     R: 82,
+    D: 68,
     SPACE: 32
 };

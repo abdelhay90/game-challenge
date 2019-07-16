@@ -1,6 +1,6 @@
 import "babel-polyfill";
 import * as Constants from "../Constants";
-import * as testAssets from "./game.assets";
+import * as testAssets from "./assets/game.assets";
 
 beforeAll(async () => {
     Object.defineProperty(Image.prototype, 'src', {
