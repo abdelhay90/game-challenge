@@ -79,6 +79,18 @@ describe('Game Render', function () {
         expect(game.currentAnimationFrame).not.toBeNull();
     });
 
+    test('Game reset mechanism', async () => {
+        const game = await testAssets.initGame();
+
+        testAssets.keyboardKeyDown(Constants.KEYS.UP);
+        testAssets.keyboardKeyDown(Constants.KEYS.UP);
+        expect(game.currentAnimationFrame).not.toBeNull();
+
+        testAssets.keyboardKeyDown(Constants.KEYS.D);
+        expect(game.currentAnimationFrame).toBeNull();
+
+    });
+
     test('Skier jumping', async () => {
         const game = await testAssets.initGame();
         testAssets.keyboardKeyDown(Constants.KEYS.SPACE);
