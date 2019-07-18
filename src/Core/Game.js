@@ -4,29 +4,47 @@ import {Canvas} from './Canvas';
 import {Skier} from "../Entities/Skier";
 import {ObstacleManager} from "../Entities/Obstacles/ObstacleManager";
 import {Rect} from './Utils';
+import {Rhino} from "../Entities/Rhino";
 
 export class Game {
     gameWindow = null;
     currentAnimationFrame = null;
+    framesCounter = 0;
 
     constructor() {
         this.assetManager = new AssetManager();
         this.canvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         this.skier = new Skier(0, 0);
+        this.rhino = new Rhino(
+            (Constants.GAME_WIDTH + 70),
+            ((Constants.GAME_HEIGHT * 0.45) - 16));
         this.obstacleManager = new ObstacleManager();
 
         document.addEventListener('keydown', this.handleKeyDown.bind(this));
     }
 
     /**
-     * reset game of demand
+     * reset game elements like skier, rhino and frames counter
      */
-    resetGame() {
+    resetGameElements() {
+        const rhinoPositions = [
+            (Constants.GAME_WIDTH + 70),
+            ((Constants.GAME_HEIGHT * 0.45) - 16)
+        ];
         cancelAnimationFrame(this.currentAnimationFrame);
         this.currentAnimationFrame = null;
-        this.canvas.clearCanvas();
         this.skier = new Skier(0, 0);
+        this.rhino.resetPosition(...rhinoPositions);
+        this.framesCounter = 0;
+    }
+
+    /**
+     * reset game of demand
+     */
+    reloadGame() {
+        this.canvas.clearCanvas();
         this.obstacleManager.obstacles = [];
+        this.resetGameElements();
         this.load().then(() => {
             this.init();
             this.run();
@@ -72,6 +90,16 @@ export class Game {
         this.canvas.clearCanvas();
         this.updateGameWindow();
         this.drawGameWindow();
+        if (this.currentAnimationFrame) {
+            if (!this.skier.killed)
+                this.framesCounter++;
+
+            if (this.rhino.moving && Math.abs(this.rhino.x - this.skier.x) > 500) {
+                this.rhino.resetPosition((Constants.GAME_WIDTH + 70),
+                    ((Constants.GAME_HEIGHT * 0.4) - 50));
+                this.framesCounter = 0;
+            }
+        }
     }
 
     /**
@@ -88,7 +116,12 @@ export class Game {
      * update game canvas and loop
      */
     updateGameWindow() {
-        this.skier.move();
+
+        this.checkIfRhinoReady();
+
+        if (!this.rhino.isKilling) {
+            this.skier.move();
+        }
 
         const previousGameWindow = this.gameWindow;
 
@@ -96,7 +129,29 @@ export class Game {
 
         this.obstacleManager.placeNewObstacle(this.gameWindow, previousGameWindow);
 
-        this.skier.checkIfSkierHitObstacle(this.obstacleManager, this.assetManager);
+        if (!this.rhino.isKilling)
+            this.skier.checkIfSkierHitObstacle(this.obstacleManager, this.assetManager);
+
+    }
+
+    /**
+     * check if time elapsed for the rhino rising
+     */
+    checkIfRhinoReady() {
+        if (this.framesCounter > Constants.RHINO_APPEARANCE_TIME) {
+            if (!this.rhino.isKilling) {
+                if (!this.rhino.moving) {
+                    this.rhino.x = this.skier.x + (Constants.GAME_WIDTH / 2) + 100;
+                }
+                this.rhino.move(this.skier.y - (Constants.GAME_HEIGHT / 45));
+                if (this.rhino.checkIfRhinoCatchSkier(this.skier, this.assetManager)) {
+                    this.skier.killed = true;
+                    this.rhino.kill().then(() => {
+                        this.resetGameElements();
+                    })
+                }
+            }
+        }
     }
 
     /**
@@ -105,7 +160,13 @@ export class Game {
     drawGameWindow() {
         this.canvas.setDrawOffset(this.gameWindow.left, this.gameWindow.top);
 
-        this.skier.draw(this.canvas, this.assetManager);
+        if (this.framesCounter > Constants.RHINO_APPEARANCE_TIME) {
+            this.rhino.draw(this.canvas, this.assetManager);
+        }
+
+        if (!this.rhino.isKilling)
+            this.skier.draw(this.canvas, this.assetManager);
+
         this.obstacleManager.drawObstacles(this.canvas, this.assetManager);
     }
 
@@ -127,52 +188,38 @@ export class Game {
     handleKeyDown(event) {
         switch (event.which) {
             case Constants.KEYS.LEFT:
-                //turn left
                 this.skier.turnLeft();
-                event.preventDefault();
                 break;
             case Constants.KEYS.RIGHT:
-                //turn right
                 this.skier.turnRight();
-                event.preventDefault();
                 break;
             case Constants.KEYS.UP:
-                //slow down
                 this.skier.turnUp();
-                event.preventDefault();
                 break;
             case Constants.KEYS.DOWN:
-                // speed up / move down
                 this.skier.turnDown();
-                event.preventDefault();
                 break;
 
             case Constants.KEYS.P:
-                // game pause
                 if (this.currentAnimationFrame) {
                     this.skier.turnDown();
                     this.pause();
                 }
-                event.preventDefault();
                 break;
             case Constants.KEYS.R:
-                // game resume
                 if (!this.currentAnimationFrame) {
                     this.skier.turnDown();
                     this.resume();
                     this.setAnimationFrameRequest();
                 }
-                event.preventDefault();
                 break;
             case Constants.KEYS.SPACE:
                 this.skier.jump();
-                event.preventDefault();
                 break;
-
             case Constants.KEYS.D:
-                this.resetGame();
-                event.preventDefault();
+                this.reloadGame();
                 break;
         }
+        event.preventDefault();
     }
 }

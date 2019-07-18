@@ -15,8 +15,11 @@ export class Skier extends Entity {
 
     jumpingTimer = 0;
 
+    killed = false;
+
     constructor(x, y) {
         super(x, y);
+        this.killed = false;
     }
 
     /**
