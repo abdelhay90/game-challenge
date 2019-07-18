@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
-    "test": "jest"
+    "test": "jest",
+    "start": "node server.js",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -52,6 +54,7 @@
   },
   "dependencies": {
     "css-loader": "^2.1.1",
+    "express": "^4.17.1",
     "style-loader": "^0.23.1"
   }
 }
