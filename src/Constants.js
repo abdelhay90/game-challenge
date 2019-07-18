@@ -26,6 +26,7 @@ export const SKIER_TIME_DIFF_BETWEEN_JUMPS = 1000;
 export const SKIER_TIME_INTERVAL_FOR_JUMPS_ANIMATION = 100;
 export const RHINO_TIME_INTERVAL_FOR_KILL_ANIMATION = 200;
 export const RHINO_APPEARANCE_TIME = 400;
+export const RAMP_SCORE_VALUE = 1;
 
 /**
  * assets constants sprite paths

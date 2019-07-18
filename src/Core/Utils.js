@@ -40,3 +40,19 @@ export class Rect {
         this.bottom = bottom;
     }
 }
+
+
+export function createNodeElement(type, options, nodeToInsertIn) {
+    let nodeElement = document.createElement(type);
+    Object.keys(options).forEach((item) => {
+        if (item === 'style') {
+            Object.keys(nodeElement.style).forEach((styleItem) => {
+                nodeElement.style[styleItem] = options.style[styleItem]
+            });
+            return;
+        }
+        nodeElement[item] = options[item];
+    });
+    nodeToInsertIn.appendChild(nodeElement);
+    return nodeElement;
+}

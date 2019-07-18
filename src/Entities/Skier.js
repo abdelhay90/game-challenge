@@ -22,6 +22,10 @@ export class Skier extends Entity {
         this.killed = false;
     }
 
+    get isCrashed() {
+        return this.direction === Constants.SKIER_DIRECTIONS.CRASH;
+    }
+
     /**
      * set current direction and update assets
      * @param direction

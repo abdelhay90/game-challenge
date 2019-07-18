@@ -5,15 +5,18 @@ import {Skier} from "../Entities/Skier";
 import {ObstacleManager} from "../Entities/Obstacles/ObstacleManager";
 import {Rect} from './Utils';
 import {Rhino} from "../Entities/Rhino";
+import {ScoreBoard} from "./ScoreBoard";
 
 export class Game {
     gameWindow = null;
     currentAnimationFrame = null;
     framesCounter = 0;
+    score = 0;
 
     constructor() {
         this.assetManager = new AssetManager();
-        this.canvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+        this.scoreBoard = new ScoreBoard();
+        this.canvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT - 100);
         this.skier = new Skier(0, 0);
         this.rhino = new Rhino(
             (Constants.GAME_WIDTH + 70),
@@ -36,6 +39,8 @@ export class Game {
         this.skier = new Skier(0, 0);
         this.rhino.resetPosition(...rhinoPositions);
         this.framesCounter = 0;
+        this.score = 0;
+        this.scoreBoard.updateScore(this.score);
     }
 
     /**
@@ -129,9 +134,13 @@ export class Game {
 
         this.obstacleManager.placeNewObstacle(this.gameWindow, previousGameWindow);
 
-        if (!this.rhino.isKilling)
+        if (!this.rhino.isKilling) {
             this.skier.checkIfSkierHitObstacle(this.obstacleManager, this.assetManager);
-
+            if (!this.skier.isCrashed) {
+                this.score += (Constants.RAMP_SCORE_VALUE);
+                this.scoreBoard.updateScore(this.score)
+            }
+        }
     }
 
     /**
