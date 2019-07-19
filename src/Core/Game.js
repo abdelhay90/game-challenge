@@ -27,7 +27,6 @@ export class Game {
             ((Constants.GAME_HEIGHT * 0.45) - 16));
         this.obstacleManager = new ObstacleManager();
         this.framesCounter = 0;
-        console.log('constructor');
         document.addEventListener('keydown', this.handleKeyDown.bind(this));
     }
 
@@ -43,7 +42,6 @@ export class Game {
         this.currentAnimationFrame = null;
         this.skier = new Skier(0, 0);
         this.rhino.resetPosition(...rhinoPositions);
-        console.log('reset elements');
         this.framesCounter = 0;
         this.score = 0;
         this.scoreBoard.updateScore(this.score);
@@ -113,7 +111,6 @@ export class Game {
                 this.skier.x - this.rhino.x > (Constants.GAME_WIDTH / 2)) {
                 this.rhino.resetPosition((Constants.GAME_WIDTH + 70),
                     ((Constants.GAME_HEIGHT * 0.4) - 50));
-                console.log('out of screen');
                 this.framesCounter = 0;
                 this.scoreBoard.setGameStatus("");
             }
@@ -168,14 +165,6 @@ export class Game {
                 this.scoreBoard.updateScore(this.score)
             }
         }
-    }
-
-    /**
-     * toggle rhino appearance flag
-     * @param show
-     */
-    toggleRhinoAppearance(show) {
-        this.rhinoAppeared = typeof show !== 'undefined' ? show : !this.rhinoAppeared;
     }
 
     /**

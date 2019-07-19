@@ -53,6 +53,10 @@ export class ScoreBoard {
         this.scoreElement.innerHTML = `Score: ${this.score}`;
     }
 
+    /**
+     * set game status
+     * @param text
+     */
     setGameStatus(text){
         this.gameStatus.innerHTML = text;
     }

@@ -34,6 +34,10 @@ export class Overlay {
         this.overlay.style.display = this.overlayOn ? "block" : "none";
     }
 
+    /**
+     * set text in the overlay container
+     * @param text
+     */
     setText(text){
         this.overlayText.innerHTML = text;
     }

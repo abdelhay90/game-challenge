@@ -14,6 +14,7 @@ describe('Rhino', function () {
             (Constants.GAME_WIDTH + 70),
             ((Constants.GAME_HEIGHT * 0.45) - 16)
         );
+        rhino.speed = 14;
         rhino.move(5);
         expect(rhino.direction).toEqual(Constants.RHINO_DIRECTIONS.LEFT);
     });
