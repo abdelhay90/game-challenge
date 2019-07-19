@@ -193,7 +193,7 @@ export class Game {
                     this.rhino.kill().then(() => {
                         this.resetGameElements();
                         this.overlay.toggleOverlay(true);
-                        this.overlay.setText("Game Over,  Press 'D' to resume game")
+                        this.overlay.setText("Game Over,  Press 'D' to restart game");
                         this.scoreBoard.setGameStatus("you have been killed");
                     })
                 }
