@@ -187,9 +187,9 @@ export class Game {
                 let height;
                 if (!this.rhino.moving) {
                     this.rhino.x = this.skier.x + (Constants.GAME_WIDTH / 2) + 100;
-
                 }
-                height = this.skier.y - (Constants.GAME_HEIGHT / 45) + randomInt(20, 50);
+                height = this.skier.y - (this.framesCounter % 20 === 0 ?
+                    ((Constants.GAME_HEIGHT / 45) + randomInt(1, 8)) : 0);
 
                 this.scoreBoard.setGameStatus("It's rhino time!");
                 this.rhino.move(height);
