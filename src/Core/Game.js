@@ -104,8 +104,9 @@ export class Game {
         this.drawGameWindow();
         if (this.currentAnimationFrame) {
             if (!this.skier.killed &&
-                this.gameStatus === Constants.GAME_STATUS.STARTED)
+                this.gameStatus === Constants.GAME_STATUS.STARTED) {
                 this.framesCounter++;
+            }
 
             if (this.rhino.moving && Math.abs(this.rhino.x - this.skier.x) > 500) {
                 this.rhino.resetPosition((Constants.GAME_WIDTH + 70),
@@ -179,6 +180,7 @@ export class Game {
      */
     checkIfRhinoReady() {
         if (this.framesCounter > Constants.RHINO_APPEARANCE_TIME) {
+            //debugger
             if (!this.rhino.isKilling) {
                 let height;
                 if (!this.rhino.moving) {
@@ -187,6 +189,7 @@ export class Game {
                 }
                 height = this.skier.y - (Constants.GAME_HEIGHT / 45) + randomInt(5, 10);
                 this.scoreBoard.setGameStatus("It's rhino time");
+
                 this.rhino.move(height);
                 if (this.rhino.checkIfRhinoCatchSkier(this.skier, this.assetManager)) {
                     this.skier.killed = true;
