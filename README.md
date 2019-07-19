@@ -91,3 +91,13 @@ how creative candidates get with this.
 * Write more unit tests for your code
 
 We are looking forward to see what you come up with!
+
+**What I have done**
+- fixing the bug
+- implement the jumping mechanism with `SPACE` key
+- adding rhino character and applying its moving catching and killing mechanism
+- Pause/Resume Game `P` for pause `R` for resume
+- reload game `D` fir reload game
+- adding simple score board
+- writing tests with reasonable code coverage: `89.33%` Statements `318/356`, `60.36%` Branches `67/111`, `92.31%` Functions `84/91`, `89.3%` Lines `317/355`
+- deployed to heroku on this link: https://ski-game-mod.herokuapp.com/

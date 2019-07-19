@@ -10,6 +10,9 @@ export function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+export const inRange = (value, target, range = 15) =>
+    value > target - range && value < target + range;
+
 /**
  * check if two rectangle intersected or not
  * @param rect1

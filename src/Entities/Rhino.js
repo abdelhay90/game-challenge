@@ -1,6 +1,6 @@
 import * as Constants from "../Constants";
 import {Entity} from "./Entity";
-import {intersectTwoRects, Rect} from "../Core/Utils";
+import {intersectTwoRects, inRange, Rect} from "../Core/Utils";
 
 export class Rhino extends Entity {
     assetName = Constants.RHINO_DEFAULT;
@@ -101,7 +101,7 @@ export class Rhino extends Entity {
                 this.x - asset.width / 2,
                 this.y - asset.height / 2,
                 this.x + asset.width / 2,
-                this.y - asset.height / 4
+                this.y - asset.height / 2
             );
 
 
@@ -113,7 +113,10 @@ export class Rhino extends Entity {
                 skierPosition.x + skierAsset.width / 2,
                 skierPosition.y
             );
-            let collision = intersectTwoRects(rhinoBounds, skierBounds);
+            
+            let collision = inRange(this.x, skierPosition.x);
+
+            //intersectTwoRects(rhinoBounds, skierBounds);
 
             if (collision) {
                 this.currentState.killing = true;

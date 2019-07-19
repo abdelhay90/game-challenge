@@ -208,7 +208,6 @@ export class Game {
             case Constants.KEYS.DOWN:
                 this.skier.turnDown();
                 break;
-
             case Constants.KEYS.P:
                 if (this.currentAnimationFrame) {
                     this.skier.turnDown();
