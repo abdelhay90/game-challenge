@@ -41,8 +41,14 @@ export class Rect {
     }
 }
 
-
-export function createNodeElement(type, options, nodeToInsertIn) {
+/**
+ * create DOM node element with some specifics like type, options, and the node to append to
+ * @param type
+ * @param options
+ * @param nodeToInsertIn
+ * @returns {any}
+ */
+export function createNodeElement(type = 'div', options = {}, nodeToInsertIn) {
     let nodeElement = document.createElement(type);
     Object.keys(options).forEach((item) => {
         if (item === 'style') {
@@ -53,6 +59,6 @@ export function createNodeElement(type, options, nodeToInsertIn) {
         }
         nodeElement[item] = options[item];
     });
-    nodeToInsertIn.appendChild(nodeElement);
+    nodeToInsertIn ? nodeToInsertIn.appendChild(nodeElement) : null;
     return nodeElement;
 }

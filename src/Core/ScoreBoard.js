@@ -10,7 +10,9 @@ export class ScoreBoard {
         this.createScoreElement();
     }
 
-
+    /**
+     * create score board DOM element
+     */
     createScoreBoard() {
         this.scoreBoard = createNodeElement('div', {
             id: "scoreBoard",
@@ -22,6 +24,9 @@ export class ScoreBoard {
         }, document.body);
     }
 
+    /**
+     * create the score value DOM element
+     */
     createScoreElement() {
         this.scoreElement = createNodeElement('span', {
             id: "scoreValue",
@@ -29,6 +34,10 @@ export class ScoreBoard {
         this.updateScore(this.score);
     }
 
+    /**
+     * update score according to specified value
+     * @param value
+     */
     updateScore(value) {
         this.score = value;
         this.scoreElement.innerHTML = `${this.score}`;

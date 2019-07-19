@@ -25,6 +25,7 @@
       "**/*.{js,jsx}",
       "!**/node_modules/**",
       "!**/vendor/**",
+      "!**/dist/**",
       "!**/coverage/**",
       "!**/tests/**",
       "!./*.js",

@@ -71,7 +71,7 @@ export class Rhino extends Entity {
         }
         this.x -= this.speed;
         this.y += (this.speed / Constants.SKIER_DIAGONAL_SPEED_REDUCER);
-        if (this.x % 10 === 0) {
+        if (this.x % Constants.SKIER_STARTING_SPEED === 0) {
             this.toggleAsset();
         }
     }
@@ -113,10 +113,10 @@ export class Rhino extends Entity {
                 skierPosition.x + skierAsset.width / 2,
                 skierPosition.y
             );
+            console.log(rhinoBounds, skierBounds)
             let collision = intersectTwoRects(rhinoBounds, skierBounds);
 
             if (collision) {
-                //this.kill();
                 this.currentState.killing = true;
                 this.moving = false;
             }
@@ -134,17 +134,6 @@ export class Rhino extends Entity {
             this.currentState.killing = true;
             this.timer = setInterval(() => {
                 !this.showKillingScene() ? resolve() : null;
-                // this.currentState.frames++;
-                // if (this.currentState.frames > 6) {
-                //     clearInterval(this.timer);
-                //     this.currentState.killing = false;
-                //     this.currentState.frames = 1;
-                //     resolve();
-                //     return;
-                // }
-                // this.setDirection(
-                //     (Constants.RHINO_DIRECTIONS.LIFT + this.currentState.frames - 1)
-                // )
             }, Constants.RHINO_TIME_INTERVAL_FOR_KILL_ANIMATION);
         })
     }
