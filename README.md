@@ -1,10 +1,21 @@
-# Ceros Ski Code Challenge
+# Game Ski Code Challenge
 
-Welcome to the Ceros Code Challenge - Ski Edition!
+**`WHAT I HAVE DONE`**
+- fixing the bug
+- implement the jumping mechanism with `SPACE` key
+- adding rhino character and applying its moving catching and killing mechanism
+- Pause/Resume Game `P` for pause `R` for resume
+- reload game `D` fir reload game
+- adding boost skier speed `B`
+- adding simple score board
+- writing tests with reasonable code coverage: `89.33%` Statements `318/356`, `60.36%` Branches `67/111`, `92.31%` Functions `84/91`, `89.3%` Lines `317/355`
+- deployed to heroku on this link: https://ski-game-mod.herokuapp.com/
+
+
+Welcome to the Game Code Challenge - Ski Edition!
 
 For this challenge, we have included some base code for Ceros Ski, our version of the classic Windows game SkiFree. If
 you've never heard of SkiFree, Google has plenty of examples. Better yet, you can play our version here: 
-http://ceros-ski.herokuapp.com/  
 
 Or deploy it locally by running:
 ```
@@ -91,14 +102,3 @@ how creative candidates get with this.
 * Write more unit tests for your code
 
 We are looking forward to see what you come up with!
-
-**What I have done**
-- fixing the bug
-- implement the jumping mechanism with `SPACE` key
-- adding rhino character and applying its moving catching and killing mechanism
-- Pause/Resume Game `P` for pause `R` for resume
-- reload game `D` fir reload game
-- adding boost skier speed `B`
-- adding simple score board
-- writing tests with reasonable code coverage: `89.33%` Statements `318/356`, `60.36%` Branches `67/111`, `92.31%` Functions `84/91`, `89.3%` Lines `317/355`
-- deployed to heroku on this link: https://ski-game-mod.herokuapp.com/

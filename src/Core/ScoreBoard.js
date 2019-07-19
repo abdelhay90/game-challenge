@@ -8,6 +8,7 @@ export class ScoreBoard {
         this.score = 0;
         this.createScoreBoard();
         this.createScoreElement();
+        this.createGameStatus()
     }
 
     /**
@@ -16,7 +17,6 @@ export class ScoreBoard {
     createScoreBoard() {
         this.scoreBoard = createNodeElement('div', {
             id: "scoreBoard",
-            innerHTML: "Score: ",
             style: {
                 width: this.width + 'px',
                 height: this.height + 'px'
@@ -25,10 +25,20 @@ export class ScoreBoard {
     }
 
     /**
+     * create score board game status DOM element
+     */
+    createGameStatus() {
+        this.gameStatus = createNodeElement('div', {
+            id: "scoreBoardGameStatus",
+
+        }, this.scoreBoard);
+    }
+
+    /**
      * create the score value DOM element
      */
     createScoreElement() {
-        this.scoreElement = createNodeElement('span', {
+        this.scoreElement = createNodeElement('div', {
             id: "scoreValue",
         }, this.scoreBoard);
         this.updateScore(this.score);
@@ -40,6 +50,10 @@ export class ScoreBoard {
      */
     updateScore(value) {
         this.score = value;
-        this.scoreElement.innerHTML = `${this.score}`;
+        this.scoreElement.innerHTML = `Score: ${this.score}`;
+    }
+
+    setGameStatus(text){
+        this.gameStatus.innerHTML = text;
     }
 }

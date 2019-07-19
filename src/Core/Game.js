@@ -6,15 +6,19 @@ import {ObstacleManager} from "../Entities/Obstacles/ObstacleManager";
 import {randomInt, Rect} from './Utils';
 import {Rhino} from "../Entities/Rhino";
 import {ScoreBoard} from "./ScoreBoard";
+import {Overlay} from "./Overlay";
 
 export class Game {
     gameWindow = null;
     currentAnimationFrame = null;
     framesCounter = 0;
     score = 0;
+    gameStatus = Constants.GAME_STATUS.NOT_STARTED;
+    rhinoAppeared = false;
 
     constructor() {
         this.assetManager = new AssetManager();
+        this.overlay = new Overlay();
         this.scoreBoard = new ScoreBoard();
         this.canvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT - 100);
         this.skier = new Skier(0, 0);
@@ -41,6 +45,8 @@ export class Game {
         this.framesCounter = 0;
         this.score = 0;
         this.scoreBoard.updateScore(this.score);
+        this.rhinoAppeared = false;
+        this.scoreBoard.setGameStatus("");
     }
 
     /**
@@ -50,6 +56,8 @@ export class Game {
         this.canvas.clearCanvas();
         this.obstacleManager.obstacles = [];
         this.resetGameElements();
+        this.gameStatus = Constants.GAME_STATUS.NOT_STARTED;
+        this.scoreBoard.setGameStatus("");
         this.load().then(() => {
             this.init();
             this.run();
@@ -77,7 +85,6 @@ export class Game {
      */
     run() {
         this.resume();
-
         this.currentAnimationFrame = requestAnimationFrame(this.run.bind(this));
     }
 
@@ -96,15 +103,18 @@ export class Game {
         this.updateGameWindow();
         this.drawGameWindow();
         if (this.currentAnimationFrame) {
-            if (!this.skier.killed)
+            if (!this.skier.killed &&
+                this.gameStatus === Constants.GAME_STATUS.STARTED)
                 this.framesCounter++;
 
             if (this.rhino.moving && Math.abs(this.rhino.x - this.skier.x) > 500) {
                 this.rhino.resetPosition((Constants.GAME_WIDTH + 70),
                     ((Constants.GAME_HEIGHT * 0.4) - 50));
                 this.framesCounter = 0;
+                this.scoreBoard.setGameStatus("");
             }
         }
+        this.overlay.toggleOverlay(false);
     }
 
     /**
@@ -115,24 +125,37 @@ export class Game {
         cancelAnimationFrame(this.currentAnimationFrame);
         this.currentAnimationFrame = null;
         this.drawGameWindow();
+        this.overlay.toggleOverlay(true);
+        this.overlay.setText("Game Paused\nPress 'R' to resume game")
+    }
+
+    setGameCalculation() {
+        const previousGameWindow = this.gameWindow;
+
+        this.calculateGameWindow();
+
+        this.obstacleManager.placeNewObstacle(this.gameWindow, previousGameWindow);
     }
 
     /**
      * update game canvas and loop
      */
     updateGameWindow() {
+        if (this.gameStatus === Constants.GAME_STATUS.NOT_STARTED) {
+            this.skier.setDirection(Constants.SKIER_DIRECTIONS.DOWN);
+            this.setGameCalculation();
+            return;
+        }
 
         this.checkIfRhinoReady();
 
         if (!this.rhino.isKilling) {
             this.skier.move();
+
+
         }
 
-        const previousGameWindow = this.gameWindow;
-
-        this.calculateGameWindow();
-
-        this.obstacleManager.placeNewObstacle(this.gameWindow, previousGameWindow);
+        this.setGameCalculation();
 
         if (!this.rhino.isKilling) {
             this.skier.checkIfSkierHitObstacle(this.obstacleManager, this.assetManager);
@@ -141,6 +164,14 @@ export class Game {
                 this.scoreBoard.updateScore(this.score)
             }
         }
+    }
+
+    /**
+     * toggle rhino appearance flag
+     * @param show
+     */
+    toggleRhinoAppearance(show) {
+        this.rhinoAppeared = typeof show !== 'undefined' ? show : !this.rhinoAppeared;
     }
 
     /**
@@ -154,12 +185,16 @@ export class Game {
                     this.rhino.x = this.skier.x + (Constants.GAME_WIDTH / 2) + 100;
 
                 }
-                height = this.skier.y - (randomInt(1,3) * Constants.GAME_HEIGHT / 45);
+                height = this.skier.y - (Constants.GAME_HEIGHT / 45) + randomInt(5, 10);
+                this.scoreBoard.setGameStatus("It's rhino time");
                 this.rhino.move(height);
                 if (this.rhino.checkIfRhinoCatchSkier(this.skier, this.assetManager)) {
                     this.skier.killed = true;
                     this.rhino.kill().then(() => {
                         this.resetGameElements();
+                        this.overlay.toggleOverlay(true);
+                        this.overlay.setText("Game Over,  Press 'D' to resume game")
+                        this.scoreBoard.setGameStatus("you have been killed");
                     })
                 }
             }
@@ -209,6 +244,10 @@ export class Game {
                 this.skier.turnUp();
                 break;
             case Constants.KEYS.DOWN:
+                if (this.gameStatus === Constants.GAME_STATUS.NOT_STARTED) {
+                    this.gameStatus = Constants.GAME_STATUS.STARTED;
+                    this.overlay.toggleOverlay(false);
+                }
                 this.skier.turnDown();
                 break;
             case Constants.KEYS.P:
