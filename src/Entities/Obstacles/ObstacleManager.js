@@ -65,16 +65,18 @@ export class ObstacleManager {
             return;
         }
 
-        if (gameWindow.left < previousGameWindow.left) {
-            this.placeObstacleLeft(gameWindow);
-        } else if (gameWindow.left > previousGameWindow.left) {
-            this.placeObstacleRight(gameWindow);
-        }
+        if (gameWindow && previousGameWindow) {
+            if (gameWindow.left < previousGameWindow.left) {
+                this.placeObstacleLeft(gameWindow);
+            } else if (gameWindow.left > previousGameWindow.left) {
+                this.placeObstacleRight(gameWindow);
+            }
 
-        if (gameWindow.top < previousGameWindow.top) {
-            this.placeObstacleTop(gameWindow);
-        } else if (gameWindow.top > previousGameWindow.top) {
-            this.placeObstacleBottom(gameWindow);
+            if (gameWindow.top < previousGameWindow.top) {
+                this.placeObstacleTop(gameWindow);
+            } else if (gameWindow.top > previousGameWindow.top) {
+                this.placeObstacleBottom(gameWindow);
+            }
         }
     };
 

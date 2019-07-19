@@ -31,8 +31,8 @@ export class AssetManager {
             const assetImage = new Image();
             assetImage.onload = () => {
 
-                assetImage.width /= (assetUrl.includes('rhino') ? 1 : 2);
-                assetImage.height /= (assetUrl.includes('rhino') ? 1 : 2);
+                assetImage.width /= (assetUrl.includes('rhino') ? 1.5 : 2);
+                assetImage.height /= (assetUrl.includes('rhino') ? 1.5 : 2);
 
                 this.loadedAssets[assetName] = assetImage;
                 resolve();
