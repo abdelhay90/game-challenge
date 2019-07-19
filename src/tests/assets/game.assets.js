@@ -19,7 +19,6 @@ export function initGame(newGame = false) {
     return new Promise((resolve, reject) => {
         const skiGame = new Game();
         skiGame.load().then(() => {
-            console.log('single');
             skiGame.init();
             skiGame.run();
             game = skiGame;

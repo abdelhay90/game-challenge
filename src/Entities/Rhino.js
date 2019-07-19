@@ -113,7 +113,6 @@ export class Rhino extends Entity {
                 skierPosition.x + skierAsset.width / 2,
                 skierPosition.y
             );
-            console.log(rhinoBounds, skierBounds)
             let collision = intersectTwoRects(rhinoBounds, skierBounds);
 
             if (collision) {
