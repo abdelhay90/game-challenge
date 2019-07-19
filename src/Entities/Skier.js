@@ -246,4 +246,11 @@ export class Skier extends Entity {
         this.currentState.jumping = false;
         this.currentState.frames = 1;
     }
+
+    boostSpeed(){
+        this.speed = Constants.SKIER_STARTING_SPEED * 2;
+        setTimeout(()=> {
+            this.speed = Constants.SKIER_STARTING_SPEED;
+        }, 1000)
+    }
 }

@@ -94,36 +94,15 @@ export class Rhino extends Entity {
      * @returns {boolean}
      */
     checkIfRhinoCatchSkier(skier, assetManager) {
-        const asset = assetManager.getAsset(this.assetName);
+        const skierPosition = skier.getPosition();
 
-        if (asset) {
-            const rhinoBounds = new Rect(
-                this.x - asset.width / 2,
-                this.y - asset.height / 2,
-                this.x + asset.width / 2,
-                this.y - asset.height / 2
-            );
+        let collision = inRange(this.x, skierPosition.x) && inRange(this.y, skierPosition.y);
 
-
-            const skierAsset = assetManager.getAsset(skier.getAssetName());
-            const skierPosition = skier.getPosition();
-            const skierBounds = new Rect(
-                skierPosition.x - skierAsset.width / 2,
-                skierPosition.y - skierAsset.height / 2,
-                skierPosition.x + skierAsset.width / 2,
-                skierPosition.y
-            );
-            
-            let collision = inRange(this.x, skierPosition.x);
-
-            //intersectTwoRects(rhinoBounds, skierBounds);
-
-            if (collision) {
-                this.currentState.killing = true;
-                this.moving = false;
-            }
-            return this.isKilling;
+        if (collision) {
+            this.currentState.killing = true;
+            this.moving = false;
         }
+        return this.isKilling;
     }
 
     /**

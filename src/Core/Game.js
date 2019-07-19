@@ -3,7 +3,7 @@ import {AssetManager} from "./AssetManager";
 import {Canvas} from './Canvas';
 import {Skier} from "../Entities/Skier";
 import {ObstacleManager} from "../Entities/Obstacles/ObstacleManager";
-import {Rect} from './Utils';
+import {randomInt, Rect} from './Utils';
 import {Rhino} from "../Entities/Rhino";
 import {ScoreBoard} from "./ScoreBoard";
 
@@ -149,10 +149,13 @@ export class Game {
     checkIfRhinoReady() {
         if (this.framesCounter > Constants.RHINO_APPEARANCE_TIME) {
             if (!this.rhino.isKilling) {
+                let height;
                 if (!this.rhino.moving) {
                     this.rhino.x = this.skier.x + (Constants.GAME_WIDTH / 2) + 100;
+
                 }
-                this.rhino.move(this.skier.y - (Constants.GAME_HEIGHT / 45));
+                height = this.skier.y - (randomInt(1,3) * Constants.GAME_HEIGHT / 45);
+                this.rhino.move(height);
                 if (this.rhino.checkIfRhinoCatchSkier(this.skier, this.assetManager)) {
                     this.skier.killed = true;
                     this.rhino.kill().then(() => {
@@ -226,6 +229,9 @@ export class Game {
                 break;
             case Constants.KEYS.D:
                 this.reloadGame();
+                break;
+            case Constants.KEYS.B:
+                this.skier.boostSpeed();
                 break;
         }
         event.preventDefault();
