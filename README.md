@@ -1,18 +1,18 @@
 # Game Ski Code Challenge
 
 **`WHAT I HAVE DONE`**
-- fixing the bug
-- implement the jumping mechanism with `SPACE` key
-- adding rhino character and applying its moving catching and killing mechanism
-- Pause/Resume Game `P` for pause `R` for resume
-- reload game `D` fir reload game
-- adding boost skier speed `B`
-- adding simple score board
-- writing tests with reasonable code coverage: `89.33%` Statements `318/356`, `60.36%` Branches `67/111`, `92.31%` Functions `84/91`, `89.3%` Lines `317/355`
-- deployed to heroku on this link: https://ski-game-mod.herokuapp.com/
+1. Fixed bug that occurs when skier crashes into an obstacle.
+2.  Implemented skier jump action with SPACE key
+3.  Added Rhino character and applied moving, catching and killing actions.
+4.  Added Pause game (key P) and Resume game (key R) functions
+5.  Reload game with key D
+6.  Added boost skier speed key B
+7.  Added simple score board
+8. writing tests with reasonable code coverage: `89.33%` Statements `318/356`, `60.36%` Branches `67/111`, `92.31%` Functions `84/91`, `89.3%` Lines `317/355`
+9. deployed to heroku on this link: https://ski-game-mod.herokuapp.com/
 
 
-Welcome to the Game Code Challenge - Ski Edition!
+**Welcome to the Game Code Challenge - Ski Edition!**
 
 For this challenge, we have included some base code for Ceros Ski, our version of the classic Windows game SkiFree. If
 you've never heard of SkiFree, Google has plenty of examples. Better yet, you can play our version here: 
