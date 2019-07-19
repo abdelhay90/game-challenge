@@ -20,7 +20,7 @@ export const RHINO_LEFT = 'rhinoLeft';
 export const RHINO_LEFT_2 = 'rhinoLeft2';
 
 export const SKIER_STARTING_SPEED = 10;
-export const RHINO_STARTING_SPEED = 13;
+export const RHINO_STARTING_SPEED = 5;
 export const SKIER_DIAGONAL_SPEED_REDUCER = 1.4142;
 export const SKIER_TIME_DIFF_BETWEEN_JUMPS = 1000;
 export const SKIER_TIME_INTERVAL_FOR_JUMPS_ANIMATION = 100;
