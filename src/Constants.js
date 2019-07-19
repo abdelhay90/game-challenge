@@ -25,7 +25,7 @@ export const SKIER_DIAGONAL_SPEED_REDUCER = 1.4142;
 export const SKIER_TIME_DIFF_BETWEEN_JUMPS = 1000;
 export const SKIER_TIME_INTERVAL_FOR_JUMPS_ANIMATION = 100;
 export const RHINO_TIME_INTERVAL_FOR_KILL_ANIMATION = 200;
-export const RHINO_APPEARANCE_TIME = 500; // after 15 sec (250 frames) (1 sec -> 60)
+export const RHINO_APPEARANCE_TIME = 550; // after 15 sec (250 frames) (1 sec -> 60)
 export const RAMP_SCORE_VALUE = 1;
 
 export const GAME_STATUS = {

@@ -26,7 +26,8 @@ export class Game {
             (Constants.GAME_WIDTH + 70),
             ((Constants.GAME_HEIGHT * 0.45) - 16));
         this.obstacleManager = new ObstacleManager();
-
+        this.framesCounter = 0;
+        console.log('constructor');
         document.addEventListener('keydown', this.handleKeyDown.bind(this));
     }
 
@@ -42,6 +43,7 @@ export class Game {
         this.currentAnimationFrame = null;
         this.skier = new Skier(0, 0);
         this.rhino.resetPosition(...rhinoPositions);
+        console.log('reset elements');
         this.framesCounter = 0;
         this.score = 0;
         this.scoreBoard.updateScore(this.score);
@@ -102,15 +104,16 @@ export class Game {
         this.canvas.clearCanvas();
         this.updateGameWindow();
         this.drawGameWindow();
-        if (this.currentAnimationFrame) {
+        if (this.currentAnimationFrame != null) {
             if (!this.skier.killed &&
                 this.gameStatus === Constants.GAME_STATUS.STARTED) {
                 this.framesCounter++;
             }
-
-            if (this.rhino.moving && Math.abs(this.rhino.x - this.skier.x) > 500) {
+            if (this.rhino.moving &&
+                this.skier.x - this.rhino.x > (Constants.GAME_WIDTH / 2)) {
                 this.rhino.resetPosition((Constants.GAME_WIDTH + 70),
                     ((Constants.GAME_HEIGHT * 0.4) - 50));
+                console.log('out of screen');
                 this.framesCounter = 0;
                 this.scoreBoard.setGameStatus("");
             }
@@ -180,7 +183,6 @@ export class Game {
      */
     checkIfRhinoReady() {
         if (this.framesCounter > Constants.RHINO_APPEARANCE_TIME) {
-            //debugger
             if (!this.rhino.isKilling) {
                 let height;
                 if (!this.rhino.moving) {
@@ -188,8 +190,8 @@ export class Game {
 
                 }
                 height = this.skier.y - (Constants.GAME_HEIGHT / 45) + randomInt(5, 10);
-                this.scoreBoard.setGameStatus("It's rhino time");
 
+                this.scoreBoard.setGameStatus("It's rhino time!");
                 this.rhino.move(height);
                 if (this.rhino.checkIfRhinoCatchSkier(this.skier, this.assetManager)) {
                     this.skier.killed = true;
